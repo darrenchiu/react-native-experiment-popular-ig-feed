@@ -4,6 +4,10 @@ import { View, Text, Image, ListView, TouchableHighlight } from 'react-native';
 import Post from './post'
 
 export default class PostScene extends Component {
+    static propTypes = {
+        imageUri: PropTypes.string.isRequired,
+    }
+
     constructor(props, context) {
         super(props, context);
     }
@@ -12,7 +16,7 @@ export default class PostScene extends Component {
     render() {
         return (
             <View style={{flex: 1, paddingTop: 22}}>
-                <Post></Post>
+                <Post imageUri={this.props.imageUri}></Post>
             </View>
         )
     }
