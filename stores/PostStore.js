@@ -11,7 +11,10 @@ class PostStore {
         });
 
 
-        this.ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
+        this.ds = new ListView.DataSource({rowHasChanged: (r1, r2) => {
+            console.log(r1.id + ' ' + r2.id);
+            return true;
+        }});
 
         this.state = {
             dataSource: this.ds.cloneWithRows([])

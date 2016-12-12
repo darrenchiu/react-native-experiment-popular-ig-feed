@@ -38,17 +38,22 @@ class PostFeedScene extends Component {
     }
 
     render() {
+        console.log(this.props.dataSource);
+
         return (
             <View style={{flex: 1}}>
                 <ListView
                     dataSource={this.props.dataSource}
                     renderRow={(rowData) => {
                         return (
-                            <TouchableHighlight onPress={() => this._onForward(rowData.images.standard_resolution.url)}>
-                                <View>
-                                    <Post imageUri={rowData.images.standard_resolution.url}></Post>
-                                </View>
-                            </TouchableHighlight>
+                            <View>
+                                <TouchableHighlight onPress={() => this._onForward(rowData.images.standard_resolution.url)}>
+                                    <View>
+                                        <Post imageUri={rowData.images.standard_resolution.url}></Post>
+                                    </View>
+                                </TouchableHighlight>
+                            </View>
+
                         )
                     }}
                 />

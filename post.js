@@ -9,15 +9,11 @@ export default class Post extends Component {
     render() {
         console.log(this.props.imageUri);
         return (
-            <View style={{flex:1}}>
                 <Image
                     style={{'width': Dimensions.get('window').width,
                         'height': Dimensions.get('window').width}}
-                    resizeMode='contain'
                     source={{uri: this.props.imageUri}}
                 />
-                <View style={{height:10}}></View>
-            </View>
         )
     }
 }
