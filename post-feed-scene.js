@@ -3,45 +3,30 @@ import {View, Text, Image, ListView, TouchableHighlight} from 'react-native';
 
 import Post from './post'
 import PostScene from './post-scene'
-import {igToken} from './config'
 
-export default class PostFeedScene extends Component {
+import connectToStores from 'alt-utils/lib/connectToStores';
+import PostStore from './stores/PostStore';
+import PostActions from './actions/PostActions'
+
+class PostFeedScene extends Component {
+
     static propTypes = {
         title: PropTypes.string.isRequired,
         navigator: PropTypes.object.isRequired,
     }
 
+    static getStores() {
+        return [PostStore];
+    }
+
+    static getPropsFromStores() {
+        return PostStore.getState();
+    }
+
     constructor(props, context) {
         super(props, context);
         this._onForward = this._onForward.bind(this);
-        this.getPosts()
-        console.log(igToken)
-
-        this.ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
-        this.state = {
-            dataSource: this.ds.cloneWithRows([])
-        };
-    }
-
-    getPosts() {
-        return fetch('https://api.instagram.com/v1/users/self/media/recent?access_token=' + igToken)
-            .then((response) => response.json())
-            .then((responseJson) => {
-                console.log(responseJson.data);
-                return responseJson.data;
-            })
-            .then((data) => {
-                let dataBlob = data.filter((item) => item.type == 'image');
-                this.setState({
-                    dataSource: this.ds.cloneWithRows(dataBlob)
-                })
-
-                console.log(dataBlob);
-
-            })
-            .catch((error) => {
-                console.error(error);
-            });
+        PostActions.fetchPosts();
     }
 
     _onForward(imageUri) {
@@ -56,7 +41,7 @@ export default class PostFeedScene extends Component {
         return (
             <View style={{flex: 1}}>
                 <ListView
-                    dataSource={this.state.dataSource}
+                    dataSource={this.props.dataSource}
                     renderRow={(rowData) => {
                         return (
                             <TouchableHighlight onPress={() => this._onForward(rowData.images.standard_resolution.url)}>
@@ -71,3 +56,5 @@ export default class PostFeedScene extends Component {
         )
     }
 }
+
+export default connectToStores(PostFeedScene);
