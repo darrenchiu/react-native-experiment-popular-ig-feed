@@ -26,6 +26,9 @@ class PostFeedScene extends Component {
     constructor(props, context) {
         super(props, context);
         this._onForward = this._onForward.bind(this);
+    }
+
+    componentWillMount(){
         PostActions.fetchPosts();
     }
 
@@ -52,6 +55,7 @@ class PostFeedScene extends Component {
                                         <Post imageUri={rowData.images.standard_resolution.url}></Post>
                                     </View>
                                 </TouchableHighlight>
+                                <View style={{height:10}}></View>
                             </View>
 
                         )

@@ -9,11 +9,11 @@ export default class Post extends Component {
     render() {
         console.log(this.props.imageUri);
         return (
-                <Image
-                    style={{'width': Dimensions.get('window').width,
-                        'height': Dimensions.get('window').width}}
-                    source={{uri: this.props.imageUri}}
-                />
+            <Image
+                style={{'width': Dimensions.get('window').width,
+                    'height': Dimensions.get('window').width}}
+                source={{uri: this.props.imageUri}}
+            />
         )
     }
 }
