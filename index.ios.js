@@ -1,10 +1,8 @@
 import React, {Component} from 'react';
 import {AppRegistry, ListView, Text, View, Image, TabBarIOS} from 'react-native';
 
-import Post from './post'
-import PostFeedScene from './post-feed-scene'
-import PostScene from './post-scene'
 import PostFeedNavigator from './post-feed-navigator'
+import CameraNavigator from './camera-navigator'
 
 class PopularInstagram extends Component {
     // Initialize the hardcoded data
@@ -12,7 +10,7 @@ class PopularInstagram extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            selectedTab: 'welcome'
+            selectedTab: 'feed'
         };
     }
 
@@ -20,25 +18,25 @@ class PopularInstagram extends Component {
         return (
             <TabBarIOS selectedTab={this.state.selectedTab}>
                 <TabBarIOS.Item
-                    selected={this.state.selectedTab === 'welcome'}
+                    selected={this.state.selectedTab === 'feed'}
                     systemIcon="history"
                     onPress={() => {
                           this.setState({
-                              selectedTab: 'welcome',
+                              selectedTab: 'feed',
                           });
                       }}>
-                    <PostFeedNavigator title="9GAG"/>
+                    <PostFeedNavigator title="Feed"/>
                 </TabBarIOS.Item>
 
                 <TabBarIOS.Item
-                    selected={this.state.selectedTab === 'more'}
+                    selected={this.state.selectedTab === 'camera'}
                     systemIcon="history"
                     onPress={() => {
                             this.setState({
-                                selectedTab: 'more',
+                                selectedTab: 'camera',
                             });
                       }}>
-                    <PostFeedNavigator title="TechCrunch"/>
+                    <CameraNavigator title="Camera"/>
                 </TabBarIOS.Item>
             </TabBarIOS>
         );

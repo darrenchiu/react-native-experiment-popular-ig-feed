@@ -12,7 +12,6 @@ class PostStore {
 
 
         this.ds = new ListView.DataSource({rowHasChanged: (r1, r2) => {
-            console.log(r1.id + ' ' + r2.id);
             return true;
         }});
 

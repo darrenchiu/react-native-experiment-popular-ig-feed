@@ -7,7 +7,6 @@ export default class Post extends Component {
     }
 
     render() {
-        console.log(this.props.imageUri);
         return (
             <Image
                 style={{'width': Dimensions.get('window').width,

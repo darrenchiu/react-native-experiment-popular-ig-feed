@@ -41,8 +41,6 @@ class PostFeedScene extends Component {
     }
 
     render() {
-        console.log(this.props.dataSource);
-
         return (
             <View style={{flex: 1}}>
                 <ListView

@@ -13,11 +13,9 @@ class PostActions {
             fetch('https://api.instagram.com/v1/users/self/media/recent?access_token=' + igToken)
                 .then((response) => response.json())
                 .then((responseJson) => {
-                    console.log(responseJson.data);
                     return responseJson.data;
                 })
                 .then((data) => {
-                    console.log(data);
                     this.updatePosts(data);
                 })
                 .catch((error) => {
