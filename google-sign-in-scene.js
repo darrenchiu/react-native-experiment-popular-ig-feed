@@ -5,7 +5,8 @@ import {
 } from 'react-native';
 
 import connectToStores from 'alt-utils/lib/connectToStores';
-import PostStore from './stores/PostStore';
+import UserStore from './stores/UserStore';
+import UserActions from './actions/UserActions';
 
 import {GoogleSignin, GoogleSigninButton} from 'react-native-google-signin';
 
@@ -17,19 +18,16 @@ class GoogleSignInScene extends Component {
     }
 
     static getStores() {
-        return [PostStore];
+        return [UserStore];
     }
 
     static getPropsFromStores() {
-        return PostStore.getState();
+        return UserStore.getState();
     }
 
     constructor(props, context) {
         super(props, context);
         this._signIn = this._signIn.bind(this);
-        this.state = {
-            user: null
-        };
     }
 
     componentDidMount() {
@@ -46,7 +44,7 @@ class GoogleSignInScene extends Component {
 
             const user = await GoogleSignin.currentUserAsync();
             console.log(user);
-            this.setState({user});
+            UserActions.updateUser(user);
         }
         catch(err) {
             console.log("Google signin error", err.code, err.message);
@@ -55,7 +53,7 @@ class GoogleSignInScene extends Component {
 
 
     render() {
-        if (!this.state.user) {
+        if (!this.props.user) {
             return (
                 <View style={styles.container}>
                     <GoogleSigninButton style={{width: 212, height: 48}} size={GoogleSigninButton.Size.Standard} color={GoogleSigninButton.Color.Light} onPress={this._signIn.bind(this)}/>
@@ -63,11 +61,11 @@ class GoogleSignInScene extends Component {
             );
         }
 
-        if (this.state.user) {
+        if (this.props.user) {
             return (
                 <View style={styles.container}>
-                    <Text style={{fontSize: 18, fontWeight: 'bold', marginBottom: 20}}>Welcome {this.state.user.name}</Text>
-                    <Text>Your email is: {this.state.user.email}</Text>
+                    <Text style={{fontSize: 18, fontWeight: 'bold', marginBottom: 20}}>Welcome {this.props.user.name}</Text>
+                    <Text>Your email is: {this.props.user.email}</Text>
 
                     <TouchableOpacity onPress={() => {this._signOut(); }}>
                         <View style={{marginTop: 50}}>
@@ -84,7 +82,7 @@ class GoogleSignInScene extends Component {
         GoogleSignin.signIn()
             .then((user) => {
                 console.log(user);
-                this.setState({user: user});
+                UserActions.updateUser(user);
             })
             .catch((err) => {
                 console.log('WRONG SIGNIN', err);
@@ -94,9 +92,8 @@ class GoogleSignInScene extends Component {
 
     _signOut() {
         GoogleSignin.revokeAccess().then(() => GoogleSignin.signOut()).then(() => {
-            this.setState({user: null});
-        })
-            .done();
+            UserActions.clearUser();
+        }).done();
     }
 }
 

@@ -10,7 +10,6 @@ class PostStore {
             postsFailed: PostActions.postsFailed
         });
 
-
         this.ds = new ListView.DataSource({rowHasChanged: (r1, r2) => {
             return true;
         }});
