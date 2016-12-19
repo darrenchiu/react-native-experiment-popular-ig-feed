@@ -3,6 +3,7 @@ import {AppRegistry, ListView, Text, View, Image, TabBarIOS} from 'react-native'
 
 import PostFeedNavigator from './post-feed-navigator'
 import CameraNavigator from './camera-navigator'
+import GoogleSignInNavigator from './google-sign-in-navigator'
 
 class PopularInstagram extends Component {
     // Initialize the hardcoded data
@@ -10,7 +11,7 @@ class PopularInstagram extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            selectedTab: 'feed'
+            selectedTab: 'login'
         };
     }
 
@@ -37,6 +38,17 @@ class PopularInstagram extends Component {
                             });
                       }}>
                     <CameraNavigator title="Camera"/>
+                </TabBarIOS.Item>
+
+                <TabBarIOS.Item
+                    selected={this.state.selectedTab === 'login'}
+                    systemIcon="history"
+                    onPress={() => {
+                            this.setState({
+                                selectedTab: 'login',
+                            });
+                      }}>
+                    <GoogleSignInNavigator title="Login"/>
                 </TabBarIOS.Item>
             </TabBarIOS>
         );
